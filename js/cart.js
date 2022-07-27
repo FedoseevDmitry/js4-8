@@ -2,8 +2,10 @@ const cart = {
   items: [],
   totalPrice: 0,
   count: 0,
-  getTotalPrice () {
-    this.totalPrice;
+  get () {
+    this.calculateItemPrice();
+
+    return this.totalPrice;
   },
   add (product, price, amount = 1) {
     const newItem = {
@@ -14,15 +16,16 @@ const cart = {
 
     this.items.push(newItem);
     this.increaseCount();
-    this.calculateItemPrice();
   },
   increaseCount () {
     this.count = this.items.reduce((acc, {amount}) => acc + amount, 0);
     console.log(this.count);
   },
   calculateItemPrice () {
-    this.totalPrice += (this.items[this.items.length - 1].price
+    this.calcItemPrice += (this.items[this.items.length - 1].price
     * this.items[this.items.length - 1].amount);
+
+    return this.calcItemPrice;
   },
   clear () {
     this.items = [];
