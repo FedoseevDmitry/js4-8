@@ -1,13 +1,13 @@
+'use strict';
+
 const cart = {
   items: [],
-  totalPrice: 0,
   count: 0,
-  get () {
-    this.calculateItemPrice();
-
-    return this.totalPrice;
+  calcItemPrice: 0,
+  get totalPrice() {
+    return this.calculateItemPrice();
   },
-  add (product, price, amount = 1) {
+  add(product, price, amount = 1) {
     const newItem = {
       product,
       price,
@@ -17,23 +17,25 @@ const cart = {
     this.items.push(newItem);
     this.increaseCount();
   },
-  increaseCount () {
+  increaseCount() {
     this.count = this.items.reduce((acc, {amount}) => acc + amount, 0);
     console.log(this.count);
   },
-  calculateItemPrice () {
-    this.calcItemPrice += (this.items[this.items.length - 1].price
-    * this.items[this.items.length - 1].amount);
+  calculateItemPrice() {
+    const itemIndex = this.items.length - 1;
+    const item = this.items[itemIndex];
+    this.calcItemPrice += (item.price * item.amount);
 
     return this.calcItemPrice;
   },
-  clear () {
+  clear() {
     this.items = [];
     this.totalPrice = 0;
     this.count = 0;
   },
   print() {
     const cartPrint = JSON.stringify(this.items);
+
     console.log(`Ваша корзина состоит из ${cartPrint}.
     Общая стоимость: ${this.totalPrice}`);
   },
